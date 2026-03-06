@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+<meta charset="UTF-8">
+<title>Pacientes</title>
+
+<style>
+
+body{
+font-family:Arial;
+background:#f4f6f8;
+padding:30px;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+background:white;
+}
+
+th,td{
+padding:10px;
+border:1px solid #ddd;
+}
+
+th{
+background:#eee;
+}
+
+input{
+padding:8px;
+margin-right:10px;
+}
+
+button{
+padding:8px 15px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>Cadastro de Pacientes</h1>
+
+<input id="petName" placeholder="Nome do Pet">
+<input id="ownerName" placeholder="Nome do Dono">
+<input id="phone" placeholder="Telefone">
+
+<button onclick="addPatient()">Cadastrar</button>
+
+<table>
+
+<thead>
+<tr>
+<th>Pet</th>
+<th>Dono</th>
+<th>Telefone</th>
+</tr>
+</thead>
+
+<tbody id="patientList"></tbody>
+
+</table>
+
+<script>
+
+function addPatient(){
+
+const pet=document.getElementById("petName").value;
+const owner=document.getElementById("ownerName").value;
+const phone=document.getElementById("phone").value;
+
+const row=document.createElement("tr");
+
+row.innerHTML=`
+<td>${pet}</td>
+<td>${owner}</td>
+<td>${phone}</td>
+`;
+
+document.getElementById("patientList").appendChild(row);
+
+}
+
+</script>
+
+</body>
+
+</html>
