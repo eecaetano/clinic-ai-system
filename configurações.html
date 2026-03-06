@@ -1,92 +1,69 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
-
 <meta charset="UTF-8">
 <title>Configurações</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
 
 <style>
-
-body{
-font-family:Arial;
-background:#f4f6f8;
-padding:30px;
-}
-
-section{
-background:white;
-padding:20px;
-margin-bottom:20px;
-border-radius:6px;
-}
-
-input{
-padding:8px;
-margin-top:10px;
-width:300px;
-}
-
-button{
-margin-top:10px;
-padding:8px 15px;
-}
-
+*{margin:0;padding:0;box-sizing:border-box;font-family:Segoe UI, Arial, sans-serif;}
+body{background:linear-gradient(135deg,#0f172a,#1e293b,#020617);height:100vh;color:white;display:flex;}
+.sidebar{width:260px;background:rgba(255,255,255,0.05);backdrop-filter:blur(15px);border-right:1px solid rgba(255,255,255,0.1);padding:30px;display:flex;flex-direction:column;}
+.logo{font-size:22px;font-weight:700;margin-bottom:40px;letter-spacing:1px;}
+.menu a{display:block;text-decoration:none;color:white;padding:12px 15px;margin-bottom:10px;border-radius:8px;transition:0.3s;}
+.menu a:hover{background:rgba(255,255,255,0.15);transform:translateX(5px);}
+.main{flex:1;padding:40px;overflow-y:auto;}
+.header{font-size:28px;font-weight:600;margin-bottom:30px;}
+.form-container{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px;}
+input, button{padding:10px;border-radius:8px;border:none;}
+input{background:rgba(255,255,255,0.05);color:white;flex:1;min-width:150px;}
+button{background:#00f6ff;color:#0d0d0f;font-weight:600;cursor:pointer;transition:0.3s;}
+button:hover{background:#00c2d6;}
+.notification{position:fixed;bottom:20px;right:20px;background:#00f6ff;color:#0d0d0f;padding:10px 20px;border-radius:10px;box-shadow:0 0 15px #00f6ff;font-weight:600;opacity:0.9;}
 </style>
-
 </head>
-
 <body>
 
-<h1>Configurações do Sistema</h1>
+<div class="sidebar">
+  <div class="logo">Clinica Pet</div>
+  <div class="menu">
+    <a href="index.html">🏠 Dashboard</a>
+    <a href="pacientes.html">🐾 Pacientes</a>
+    <a href="agenda.html">📅 Agenda</a>
+    <a href="atendimento.html">💬 Atendimentos</a>
+    <a href="configuracoes.html">⚙ Configurações</a>
+  </div>
+</div>
 
-<section>
+<div class="main">
+  <div class="header">Configurações do Sistema</div>
 
-<h3>Nome da Clínica</h3>
+  <div class="form-container">
+    <input id="clinicName" placeholder="Nome da Clínica">
+    <input id="contactEmail" placeholder="E-mail de Contato">
+    <button onclick="salvarConfiguracoes()">Salvar</button>
+  </div>
 
-<input id="clinicName" placeholder="Digite o nome da clínica">
-
-</section>
-
-<section>
-
-<h3>Telefone da Clínica</h3>
-
-<input id="clinicPhone" placeholder="Número de telefone">
-
-</section>
-
-<section>
-
-<h3>Horário de Atendimento</h3>
-
-<input id="openHour" placeholder="Abertura (08:00)">
-<br>
-<input id="closeHour" placeholder="Fechamento (18:00)">
-
-</section>
-
-<button onclick="saveConfig()">Salvar Configurações</button>
+  <div id="notifications"></div>
+</div>
 
 <script>
-
-function saveConfig(){
-
-const config={
-clinic:document.getElementById("clinicName").value,
-phone:document.getElementById("clinicPhone").value,
-open:document.getElementById("openHour").value,
-close:document.getElementById("closeHour").value
-};
-
-console.log("Configurações salvas:",config);
-
-alert("Configurações salvas");
-
+function novaNotificacao(msg){
+  const notificationsEl=document.getElementById("notifications");
+  const notif=document.createElement("div");
+  notif.className="notification";
+  notif.textContent=msg;
+  notificationsEl.appendChild(notif);
+  setTimeout(()=>notif.remove(),4000);
 }
 
+function salvarConfiguracoes(){
+  const nome=document.getElementById("clinicName").value;
+  const email=document.getElementById("contactEmail").value;
+  if(!nome || !email){ novaNotificacao("Preencha todos os campos!"); return; }
+  // Aqui você pode integrar com Google Sheets ou API para salvar configurações
+  novaNotificacao("Configurações salvas ✅");
+}
 </script>
-
 </body>
-
 </html>
