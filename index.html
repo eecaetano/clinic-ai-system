@@ -4,57 +4,296 @@
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Sistema de Atendimento</title>
 
-<link rel="stylesheet" href="/css/style.css">
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Segoe UI, Arial, sans-serif;
+}
+
+body{
+
+background:linear-gradient(135deg,#0f172a,#1e293b,#020617);
+height:100vh;
+color:white;
+display:flex;
+
+}
+
+/* SIDEBAR */
+
+.sidebar{
+
+width:260px;
+background:rgba(255,255,255,0.05);
+backdrop-filter:blur(15px);
+border-right:1px solid rgba(255,255,255,0.1);
+
+padding:30px;
+
+display:flex;
+flex-direction:column;
+
+}
+
+.logo{
+
+font-size:22px;
+font-weight:700;
+margin-bottom:40px;
+
+letter-spacing:1px;
+
+}
+
+.menu a{
+
+display:block;
+
+text-decoration:none;
+color:white;
+
+padding:12px 15px;
+margin-bottom:10px;
+
+border-radius:8px;
+
+transition:0.3s;
+
+}
+
+.menu a:hover{
+
+background:rgba(255,255,255,0.15);
+transform:translateX(5px);
+
+}
+
+/* MAIN */
+
+.main{
+
+flex:1;
+padding:40px;
+
+}
+
+.header{
+
+font-size:28px;
+font-weight:600;
+
+margin-bottom:30px;
+
+}
+
+/* CARDS */
+
+.cards{
+
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:20px;
+
+}
+
+.card{
+
+background:rgba(255,255,255,0.05);
+border:1px solid rgba(255,255,255,0.1);
+
+padding:25px;
+
+border-radius:14px;
+
+backdrop-filter:blur(10px);
+
+transition:0.4s;
+
+}
+
+.card:hover{
+
+transform:translateY(-8px);
+background:rgba(255,255,255,0.08);
+
+box-shadow:0 10px 30px rgba(0,0,0,0.4);
+
+}
+
+.card h3{
+
+margin-bottom:10px;
+
+}
+
+.card p{
+
+opacity:0.8;
+font-size:14px;
+
+}
+
+/* STATUS AREA */
+
+.status{
+
+margin-top:40px;
+
+background:rgba(255,255,255,0.05);
+border-radius:12px;
+
+padding:25px;
+
+border:1px solid rgba(255,255,255,0.1);
+
+}
+
+.status h2{
+
+margin-bottom:15px;
+
+}
+
+.system-indicator{
+
+display:flex;
+align-items:center;
+
+gap:10px;
+
+}
+
+.dot{
+
+width:12px;
+height:12px;
+
+border-radius:50%;
+
+background:#22c55e;
+
+box-shadow:0 0 10px #22c55e;
+
+animation:pulse 2s infinite;
+
+}
+
+@keyframes pulse{
+
+0%{opacity:0.5}
+50%{opacity:1}
+100%{opacity:0.5}
+
+}
+
+</style>
 
 </head>
 
 <body>
 
-<header class="navbar">
+<!-- SIDEBAR -->
 
-<h2>Assistente Clínico</h2>
+<div class="sidebar">
 
-<nav>
+<div class="logo">
+Vet Atendimento
+</div>
 
-<a href="/pages/atendimento.html">Atendimento</a>
-<a href="/pages/agenda.html">Agenda</a>
-<a href="/pages/pacientes.html">Pacientes</a>
-<a href="/pages/configuracoes.html">Configurações</a>
+<div class="menu">
 
-</nav>
+<a href="pages/atendimento.html">💬 Atendimento</a>
 
-</header>
+<a href="pages/agenda.html">📅 Agenda</a>
 
-<main class="dashboard">
+<a href="pages/pacientes.html">🐾 Pacientes</a>
 
-<h1>Painel da Clínica</h1>
+<a href="pages/configuracoes.html">⚙ Configurações</a>
+
+</div>
+
+</div>
+
+<!-- MAIN -->
+
+<div class="main">
+
+<div class="header">
+Painel do Sistema
+</div>
 
 <div class="cards">
 
 <div class="card">
-<h3>Atendimentos ativos</h3>
-<p id="activeCalls">0</p>
+
+<h3>Atendimento</h3>
+
+<p>
+Chat e chamadas com clientes em tempo real.
+</p>
+
 </div>
 
 <div class="card">
-<h3>Consultas hoje</h3>
-<p id="todayAppointments">0</p>
+
+<h3>Agenda</h3>
+
+<p>
+Gerenciamento de consultas e horários.
+</p>
+
 </div>
 
 <div class="card">
-<h3>Pacientes cadastrados</h3>
-<p id="totalPatients">0</p>
+
+<h3>Pacientes</h3>
+
+<p>
+Cadastro completo de pets e responsáveis.
+</p>
+
+</div>
+
+<div class="card">
+
+<h3>Configurações</h3>
+
+<p>
+Personalização do sistema e dados da clínica.
+</p>
+
 </div>
 
 </div>
 
-</main>
+<div class="status">
 
-<script src="/js/app.js"></script>
+<h2>Status do Sistema</h2>
+
+<div class="system-indicator">
+
+<div class="dot"></div>
+
+<span>Sistema operacional</span>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+console.log("Sistema carregado");
+
+</script>
 
 </body>
 
