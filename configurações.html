@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+<meta charset="UTF-8">
+<title>Configurações</title>
+
+<style>
+
+body{
+font-family:Arial;
+background:#f4f6f8;
+padding:30px;
+}
+
+section{
+background:white;
+padding:20px;
+margin-bottom:20px;
+border-radius:6px;
+}
+
+input{
+padding:8px;
+margin-top:10px;
+width:300px;
+}
+
+button{
+margin-top:10px;
+padding:8px 15px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>Configurações do Sistema</h1>
+
+<section>
+
+<h3>Nome da Clínica</h3>
+
+<input id="clinicName" placeholder="Digite o nome da clínica">
+
+</section>
+
+<section>
+
+<h3>Telefone da Clínica</h3>
+
+<input id="clinicPhone" placeholder="Número de telefone">
+
+</section>
+
+<section>
+
+<h3>Horário de Atendimento</h3>
+
+<input id="openHour" placeholder="Abertura (08:00)">
+<br>
+<input id="closeHour" placeholder="Fechamento (18:00)">
+
+</section>
+
+<button onclick="saveConfig()">Salvar Configurações</button>
+
+<script>
+
+function saveConfig(){
+
+const config={
+clinic:document.getElementById("clinicName").value,
+phone:document.getElementById("clinicPhone").value,
+open:document.getElementById("openHour").value,
+close:document.getElementById("closeHour").value
+};
+
+console.log("Configurações salvas:",config);
+
+alert("Configurações salvas");
+
+}
+
+</script>
+
+</body>
+
+</html>
