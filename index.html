@@ -1,174 +1,297 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PupPilot - Painel Principal</title>
-<!-- Fonte futurista -->
-<link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+<title>Sistema de Atendimento</title>
+
 <style>
-    /* Reset básico */
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Roboto Mono', monospace; }
-    body {
-        background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
-        color: #fff;
-        min-height: 100vh;
-    }
-    header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 1rem 2rem;
-        background: rgba(0,0,0,0.4);
-        backdrop-filter: blur(10px);
-        border-bottom: 1px solid rgba(255,255,255,0.1);
-    }
-    header h1 {
-        font-weight: 700;
-        font-size: 1.8rem;
-        letter-spacing: 1px;
-        color: #00ffe7;
-    }
-    nav a {
-        margin-left: 1.5rem;
-        text-decoration: none;
-        color: #fff;
-        font-weight: 500;
-        transition: 0.3s;
-    }
-    nav a:hover {
-        color: #00ffe7;
-        text-shadow: 0 0 10px #00ffe7;
-    }
-    main {
-        padding: 2rem;
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 1.5rem;
-    }
-    .card {
-        background: rgba(255,255,255,0.05);
-        border: 1px solid rgba(255,255,255,0.1);
-        border-radius: 15px;
-        padding: 1.5rem;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        backdrop-filter: blur(10px);
-        transition: transform 0.3s, box-shadow 0.3s;
-    }
-    .card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 10px 20px rgba(0,255,231,0.4);
-    }
-    .card h2 {
-        color: #00ffe7;
-        margin-bottom: 1rem;
-        font-size: 1.4rem;
-    }
-    .card p {
-        font-size: 1rem;
-        color: #ddd;
-    }
-    .notifications {
-        position: fixed;
-        top: 1rem;
-        right: 1rem;
-        width: 300px;
-        display: flex;
-        flex-direction: column;
-        gap: 0.5rem;
-        z-index: 100;
-    }
-    .notification {
-        background: #111;
-        border-left: 5px solid #00ffe7;
-        padding: 0.8rem 1rem;
-        border-radius: 8px;
-        backdrop-filter: blur(5px);
-        box-shadow: 0 2px 10px rgba(0,0,0,0.5);
-        animation: slideIn 0.5s ease forwards;
-    }
-    @keyframes slideIn {
-        from { transform: translateX(100%); opacity: 0; }
-        to { transform: translateX(0); opacity: 1; }
-    }
-    footer {
-        text-align: center;
-        padding: 1rem;
-        background: rgba(0,0,0,0.4);
-        border-top: 1px solid rgba(255,255,255,0.1);
-        backdrop-filter: blur(10px);
-        margin-top: 2rem;
-    }
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Segoe UI, Arial, sans-serif;
+}
+
+body{
+
+background:linear-gradient(135deg,#0f172a,#1e293b,#020617);
+height:100vh;
+color:white;
+display:flex;
+
+}
+
+/* SIDEBAR */
+
+.sidebar{
+
+width:260px;
+background:rgba(255,255,255,0.05);
+backdrop-filter:blur(15px);
+border-right:1px solid rgba(255,255,255,0.1);
+
+padding:30px;
+
+display:flex;
+flex-direction:column;
+
+}
+
+.logo{
+
+font-size:22px;
+font-weight:700;
+margin-bottom:40px;
+
+letter-spacing:1px;
+
+}
+
+.menu a{
+
+display:block;
+
+text-decoration:none;
+color:white;
+
+padding:12px 15px;
+margin-bottom:10px;
+
+border-radius:8px;
+
+transition:0.3s;
+
+}
+
+.menu a:hover{
+
+background:rgba(255,255,255,0.15);
+transform:translateX(5px);
+
+}
+
+/* MAIN */
+
+.main{
+
+flex:1;
+padding:40px;
+
+}
+
+.header{
+
+font-size:28px;
+font-weight:600;
+
+margin-bottom:30px;
+
+}
+
+/* CARDS */
+
+.cards{
+
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:20px;
+
+}
+
+.card{
+
+background:rgba(255,255,255,0.05);
+border:1px solid rgba(255,255,255,0.1);
+
+padding:25px;
+
+border-radius:14px;
+
+backdrop-filter:blur(10px);
+
+transition:0.4s;
+
+}
+
+.card:hover{
+
+transform:translateY(-8px);
+background:rgba(255,255,255,0.08);
+
+box-shadow:0 10px 30px rgba(0,0,0,0.4);
+
+}
+
+.card h3{
+
+margin-bottom:10px;
+
+}
+
+.card p{
+
+opacity:0.8;
+font-size:14px;
+
+}
+
+/* STATUS AREA */
+
+.status{
+
+margin-top:40px;
+
+background:rgba(255,255,255,0.05);
+border-radius:12px;
+
+padding:25px;
+
+border:1px solid rgba(255,255,255,0.1);
+
+}
+
+.status h2{
+
+margin-bottom:15px;
+
+}
+
+.system-indicator{
+
+display:flex;
+align-items:center;
+
+gap:10px;
+
+}
+
+.dot{
+
+width:12px;
+height:12px;
+
+border-radius:50%;
+
+background:#22c55e;
+
+box-shadow:0 0 10px #22c55e;
+
+animation:pulse 2s infinite;
+
+}
+
+@keyframes pulse{
+
+0%{opacity:0.5}
+50%{opacity:1}
+100%{opacity:0.5}
+
+}
+
 </style>
+
 </head>
+
 <body>
 
-<header>
-    <h1>PupPilot</h1>
-    <nav>
-        <a href="atendimento.html">💬 Atendimento</a>
-        <a href="agenda.html">📅 Agenda</a>
-        <a href="pacientes.html">🐾 Pacientes</a>
-        <a href="configurações.html">⚙ Configurações</a>
-    </nav>
-</header>
+<!-- SIDEBAR -->
 
-<div class="notifications" id="notifications"></div>
+<div class="sidebar">
 
-<main>
-    <div class="card">
-        <h2>Consultas do Dia</h2>
-        <p id="consultasDia">Carregando consultas...</p>
-    </div>
-    <div class="card">
-        <h2>Pacientes Cadastrados</h2>
-        <p id="pacientesCadastrados">Carregando pacientes...</p>
-    </div>
-    <div class="card">
-        <h2>Atendimentos Ativos</h2>
-        <p id="atendimentosAtivos">Carregando atendimentos...</p>
-    </div>
-    <div class="card">
-        <h2>Agenda Visual</h2>
-        <p>🔹 Estilo Google Calendar</p>
-    </div>
-    <div class="card">
-        <h2>IA Automática</h2>
-        <p>🔹 Atendimento inteligente ativo</p>
-    </div>
-</main>
+<div class="logo">
+Vet Atendimento
+</div>
 
-<footer>
-    © 2026 PupPilot - Futurista e funcional
-</footer>
+<div class="menu">
+
+<a href="pages/atendimento.html">💬 Atendimento</a>
+<a href="pages/agenda.html">📅 Agenda</a>
+<a href="pages/pacientes.html">🐾 Pacientes</a>
+<a href="pages/configurações.html">⚙ Configurações</a>
+
+</div>
+
+</div>
+
+<!-- MAIN -->
+
+<div class="main">
+
+<div class="header">
+Painel do Sistema
+</div>
+
+<div class="cards">
+
+<div class="card">
+
+<h3>Atendimento</h3>
+
+<p>
+Chat e chamadas com clientes em tempo real.
+</p>
+
+</div>
+
+<div class="card">
+
+<h3>Agenda</h3>
+
+<p>
+Gerenciamento de consultas e horários.
+</p>
+
+</div>
+
+<div class="card">
+
+<h3>Pacientes</h3>
+
+<p>
+Cadastro completo de pets e responsáveis.
+</p>
+
+</div>
+
+<div class="card">
+
+<h3>Configurações</h3>
+
+<p>
+Personalização do sistema e dados da clínica.
+</p>
+
+</div>
+
+</div>
+
+<div class="status">
+
+<h2>Status do Sistema</h2>
+
+<div class="system-indicator">
+
+<div class="dot"></div>
+
+<span>Sistema operacional</span>
+
+</div>
+
+</div>
+
+</div>
 
 <script>
-    // Simulação de carregamento de dados
-    document.getElementById("consultasDia").textContent = "5 consultas hoje";
-    document.getElementById("pacientesCadastrados").textContent = "123 pacientes cadastrados";
-    document.getElementById("atendimentosAtivos").textContent = "2 atendimentos em andamento";
 
-    // Notificações em tempo real (simulação)
-    const notificationsEl = document.getElementById("notifications");
-    function novaNotificacao(msg) {
-        const notif = document.createElement("div");
-        notif.className = "notification";
-        notif.textContent = msg;
-        notificationsEl.appendChild(notif);
-        setTimeout(() => notif.remove(), 5000);
-    }
+console.log("Sistema carregado");
 
-    // Simulando notificações periódicas
-    setInterval(() => {
-        novaNotificacao("Novo paciente aguardando atendimento 🐾");
-    }, 8000);
-
-    setInterval(() => {
-        novaNotificacao("Consulta iniciada 🔹");
-    }, 12000);
 </script>
 
 </body>
+
 </html>
