@@ -1,12 +1,10 @@
 clinic-ai-system/
 │
-├── index.html              → painel principal
-│
-├── pages/
-│   ├── atendimento.html    → chat + voz
-│   ├── agenda.html         → agendamentos
-│   ├── pacientes.html      → registros
-│   └── configuracoes.html  → ajustes do sistema
+├── index.html          → painel principal
+├── atendimento.html    → chat + voz
+├── agenda.html         → agendamentos
+├── pacientes.html      → registros
+└── configuracoes.html  → ajustes do sistema
 │
 ├── components/
 │   ├── navbar.html
