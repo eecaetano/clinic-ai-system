@@ -5,110 +5,198 @@
 <meta charset="UTF-8">
 <title>Atendimento</title>
 
+<!-- Fonte futurista -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
 <style>
-body{
-font-family:Arial;
-background:#f4f6f8;
-padding:30px;
-}
+  body {
+    font-family: 'Inter', Arial, sans-serif;
+    background: #0d0d0f;
+    color: #e0e0e0;
+    padding: 30px;
+    margin: 0;
+  }
 
-h1{
-margin-bottom:20px;
-}
+  h1 {
+    text-align: center;
+    font-weight: 600;
+    font-size: 2em;
+    color: #00f6ff;
+    margin-bottom: 20px;
+    text-shadow: 0 0 10px #00f6ff;
+  }
 
-#chatContainer{
-background:white;
-height:400px;
-overflow-y:auto;
-border:1px solid #ccc;
-padding:10px;
-margin-bottom:10px;
-}
+  .top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
 
-.message{
-padding:8px;
-margin-bottom:5px;
-border-radius:5px;
-}
+  .top-bar button {
+    background: #00f6ff;
+    color: #0d0d0f;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.3s;
+  }
 
-.user{
-background:#d1ecf1;
-text-align:right;
-}
+  .top-bar button:hover {
+    background: #00c2d6;
+  }
 
-.bot{
-background:#e2e3e5;
-text-align:left;
-}
+  #chatContainer {
+    background: #1a1a1f;
+    border-radius: 12px;
+    padding: 20px;
+    height: 400px;
+    overflow-y: auto;
+    box-shadow: 0 0 20px rgba(0, 246, 255, 0.2);
+    margin-bottom: 20px;
+  }
 
-#messageInput{
-width:70%;
-padding:10px;
-}
+  #chatContainer .message {
+    padding: 10px 15px;
+    margin: 5px 0;
+    border-radius: 12px;
+    max-width: 70%;
+    word-wrap: break-word;
+  }
 
-button{
-padding:10px 15px;
-margin-left:5px;
-}
+  .message.user {
+    background: #00f6ff;
+    color: #0d0d0f;
+    margin-left: auto;
+  }
 
-#callArea{
-margin-top:20px;
-padding:15px;
-background:white;
-border:1px solid #ccc;
-}
+  .message.bot {
+    background: #111;
+    color: #00f6ff;
+    margin-right: auto;
+  }
 
+  #startCall {
+    background: #00f6ff;
+    color: #0d0d0f;
+    border: none;
+    border-radius: 12px;
+    padding: 12px 25px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+
+  #startCall:hover {
+    background: #00c2d6;
+  }
+
+  .notification {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #00f6ff;
+    color: #0d0d0f;
+    padding: 10px 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px #00f6ff;
+    font-weight: 600;
+    opacity: 0.9;
+  }
 </style>
 </head>
+
 <body>
 
-<h1>Atendimento</h1>
-
-<div id="chatContainer"></div>
-<input id="messageInput" placeholder="Digite a mensagem">
-<button onclick="sendMessage()">
-Enviar
-</button>
-
-<div id="callArea">
-<h3>Chamada</h3>
-<button id="startCall">
-Iniciar chamada
-</button>
-
-<p id="callStatus">
-Status: parado
-</p>
-
+<div class="top-bar">
+  <button onclick="window.location.href='index.html'">🔙 Voltar</button>
+  <h1>Atendimentos Ativos</h1>
 </div>
+
+<div id="chatContainer">
+  <!-- Mensagens vão aparecer aqui -->
+</div>
+
+<button id="startCall">💬 Iniciar Chamada</button>
+
+<div id="notifications"></div>
+
 <script>
-const chat=document.getElementById("chatContainer");
-function addMessage(text,type){
-const div=document.createElement("div");
-div.classList.add("message");
-div.classList.add(type);
-div.innerText=text;
-chat.appendChild(div);
-chat.scrollTop=chat.scrollHeight;
+const APP_WEB_URL = 'https://script.google.com/macros/s/AKfycbwEMX7UrDj1GOeW4a_4GyOagGlndy9rcFsBOgXwH6Ef1DUfagUvdbDip8VUWadw5V4JEA/exec';
+const SHEET_ABA = 'Atendimentos';
+
+const chatContainer = document.getElementById("chatContainer");
+
+// Função para carregar atendimentos do Google Sheets
+async function carregarAtendimentos() {
+  try {
+    const res = await fetch(`${APP_WEB_URL}?action=${SHEET_ABA}`);
+    const data = await res.json();
+    chatContainer.innerHTML = "";
+    data.forEach(at => {
+      const msgEl = document.createElement("div");
+      msgEl.className = "message bot";
+      msgEl.textContent = `Pet: ${at[0]} | Dono: ${at[1]} | Status: ${at[2]}`;
+      chatContainer.appendChild(msgEl);
+    });
+    chatContainer.scrollTop = chatContainer.scrollHeight;
+  } catch(err) {
+    console.error("Erro ao carregar atendimentos:", err);
+  }
 }
 
-function sendMessage(){
-const input=document.getElementById("messageInput");
-const text=input.value;
-if(!text)return;
-addMessage(text,"user");
-input.value="";
-setTimeout(()=>{
-addMessage("Recebemos sua mensagem. Em breve vamos responder.","bot");
+// Função para iniciar chamada e modo IA automática
+document.getElementById("startCall").onclick = async () => {
+  novaNotificacao("Chamada iniciada 🔹");
 
-},500);
+  // Modo IA: responder automaticamente
+  const userMsg = "Paciente conectado";
+  const msgEl = document.createElement("div");
+  msgEl.className = "message user";
+  msgEl.textContent = userMsg;
+  chatContainer.appendChild(msgEl);
+  chatContainer.scrollTop = chatContainer.scrollHeight;
 
-}
-document.getElementById("startCall").onclick=()=>{
-console.log("iniciando chamada");
-document.getElementById("callStatus").innerText="Status: chamada iniciada";
+  setTimeout(async () => {
+    const botReply = "Olá! Eu sou o assistente IA. Como posso ajudar no atendimento?";
+    const botMsgEl = document.createElement("div");
+    botMsgEl.className = "message bot";
+    botMsgEl.textContent = botReply;
+    chatContainer.appendChild(botMsgEl);
+    chatContainer.scrollTop = chatContainer.scrollHeight;
 
+    // Opcional: gravar atendimento no Google Sheets
+    try {
+      const res = await fetch(`${APP_WEB_URL}?action=addAtendimento&pet=Desconhecido&owner=Desconhecido&status=Em andamento`);
+      const result = await res.json();
+      if(result.success) {
+        novaNotificacao("Atendimento registrado ✅");
+        carregarAtendimentos();
+      }
+    } catch(err) {
+      console.error("Erro ao registrar atendimento:", err);
+    }
+  }, 1500);
 };
+
+// Função para mostrar notificações
+function novaNotificacao(msg) {
+  const notificationsEl = document.getElementById("notifications");
+  const notif = document.createElement("div");
+  notif.className = "notification";
+  notif.textContent = msg;
+  notificationsEl.appendChild(notif);
+  setTimeout(() => notif.remove(), 4000);
+}
+
+// Carregar atendimentos ao abrir a página
+carregarAtendimentos();
+
+// Atualização automática a cada 10s
+setInterval(carregarAtendimentos, 10000);
 </script>
+
 </body>
 </html>
