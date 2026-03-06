@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+<meta charset="UTF-8">
+<title>Agenda</title>
+
+<style>
+
+body{
+font-family:Arial;
+background:#f4f6f8;
+padding:30px;
+}
+
+h1{
+margin-bottom:20px;
+}
+
+form{
+margin-bottom:20px;
+}
+
+input,button{
+padding:8px;
+margin-right:10px;
+}
+
+table{
+width:100%;
+background:white;
+border-collapse:collapse;
+}
+
+th,td{
+border:1px solid #ddd;
+padding:10px;
+text-align:left;
+}
+
+th{
+background:#eaeaea;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>Agenda de Consultas</h1>
+
+<form id="appointmentForm">
+
+<input id="time" placeholder="Horário (09:00)">
+<input id="pet" placeholder="Nome do Pet">
+<input id="owner" placeholder="Dono">
+
+<button type="submit">Adicionar</button>
+
+</form>
+
+<table>
+
+<thead>
+<tr>
+<th>Horário</th>
+<th>Pet</th>
+<th>Dono</th>
+</tr>
+</thead>
+
+<tbody id="appointmentList"></tbody>
+
+</table>
+
+<script>
+
+const form=document.getElementById("appointmentForm");
+const list=document.getElementById("appointmentList");
+
+form.onsubmit=function(e){
+
+e.preventDefault();
+
+const time=document.getElementById("time").value;
+const pet=document.getElementById("pet").value;
+const owner=document.getElementById("owner").value;
+
+const row=document.createElement("tr");
+
+row.innerHTML=`
+<td>${time}</td>
+<td>${pet}</td>
+<td>${owner}</td>
+`;
+
+list.appendChild(row);
+
+form.reset();
+
+};
+
+</script>
+
+</body>
+</html>
