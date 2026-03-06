@@ -2,106 +2,215 @@
 <html lang="pt-BR">
 
 <head>
-
 <meta charset="UTF-8">
 <title>Agenda</title>
 
+<!-- Fonte futurista -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
 <style>
+  body {
+    font-family: 'Inter', Arial, sans-serif;
+    background: #0d0d0f;
+    color: #e0e0e0;
+    padding: 30px;
+    margin: 0;
+  }
 
-body{
-font-family:Arial;
-background:#f4f6f8;
-padding:30px;
-}
+  h1 {
+    text-align: center;
+    font-weight: 600;
+    font-size: 2em;
+    color: #00f6ff;
+    margin-bottom: 20px;
+    text-shadow: 0 0 10px #00f6ff;
+  }
 
-h1{
-margin-bottom:20px;
-}
+  .top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
 
-form{
-margin-bottom:20px;
-}
+  .top-bar button {
+    background: #00f6ff;
+    color: #0d0d0f;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.3s;
+  }
 
-input,button{
-padding:8px;
-margin-right:10px;
-}
+  .top-bar button:hover {
+    background: #00c2d6;
+  }
 
-table{
-width:100%;
-background:white;
-border-collapse:collapse;
-}
+  .form-container {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
 
-th,td{
-border:1px solid #ddd;
-padding:10px;
-text-align:left;
-}
+  .form-container input {
+    padding: 10px;
+    border-radius: 8px;
+    border: none;
+    flex: 1;
+    min-width: 150px;
+    background: #1a1a1f;
+    color: #e0e0e0;
+  }
 
-th{
-background:#eaeaea;
-}
+  .form-container button {
+    background: #00f6ff;
+    color: #0d0d0f;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.3s;
+  }
 
+  .form-container button:hover {
+    background: #00c2d6;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #1a1a1f;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0, 246, 255, 0.2);
+  }
+
+  th, td {
+    padding: 15px;
+    text-align: left;
+  }
+
+  th {
+    background: #111;
+    color: #00f6ff;
+    text-transform: uppercase;
+  }
+
+  tr:nth-child(even) {
+    background: #141418;
+  }
+
+  tr:hover {
+    background: #0d0d0f;
+    cursor: pointer;
+  }
+
+  .notification {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #00f6ff;
+    color: #0d0d0f;
+    padding: 10px 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px #00f6ff;
+    font-weight: 600;
+    opacity: 0.9;
+  }
 </style>
-
 </head>
 
 <body>
 
-<h1>Agenda de Consultas</h1>
+<div class="top-bar">
+  <button onclick="window.location.href='index.html'">🔙 Voltar</button>
+  <h1>Agenda de Consultas</h1>
+</div>
 
-<form id="appointmentForm">
-
-<input id="time" placeholder="Horário (09:00)">
-<input id="pet" placeholder="Nome do Pet">
-<input id="owner" placeholder="Dono">
-
-<button type="submit">Adicionar</button>
-
-</form>
+<div class="form-container">
+  <input id="time" placeholder="Horário (09:00)">
+  <input id="pet" placeholder="Nome do Pet">
+  <input id="owner" placeholder="Dono">
+  <button onclick="addAppointment()">Adicionar</button>
+</div>
 
 <table>
-
-<thead>
-<tr>
-<th>Horário</th>
-<th>Pet</th>
-<th>Dono</th>
-</tr>
-</thead>
-
-<tbody id="appointmentList"></tbody>
-
+  <thead>
+    <tr>
+      <th>Horário</th>
+      <th>Pet</th>
+      <th>Dono</th>
+    </tr>
+  </thead>
+  <tbody id="appointmentList"></tbody>
 </table>
 
+<div id="notifications"></div>
+
 <script>
+const APP_WEB_URL = 'https://script.google.com/macros/s/AKfycbwEMX7UrDj1GOeW4a_4GyOagGlndy9rcFsBOgXwH6Ef1DUfagUvdbDip8VUWadw5V4JEA/exec';
+const SHEET_ABA = 'Consultas';
 
-const form=document.getElementById("appointmentForm");
-const list=document.getElementById("appointmentList");
+// Carregar consultas reais
+async function carregarConsultas() {
+  try {
+    const res = await fetch(`${APP_WEB_URL}?action=${SHEET_ABA}`);
+    const data = await res.json();
 
-form.onsubmit=function(e){
+    const container = document.getElementById("appointmentList");
+    container.innerHTML = "";
+    data.forEach(a => {
+      const row = document.createElement("tr");
+      row.innerHTML = `<td>${a[0]}</td><td>${a[1]}</td><td>${a[2]}</td>`;
+      container.appendChild(row);
+    });
+  } catch(err) {
+    console.error("Erro ao carregar consultas:", err);
+  }
+}
 
-e.preventDefault();
+// Adicionar nova consulta
+async function addAppointment() {
+  const time = document.getElementById("time").value;
+  const pet = document.getElementById("pet").value;
+  const owner = document.getElementById("owner").value;
 
-const time=document.getElementById("time").value;
-const pet=document.getElementById("pet").value;
-const owner=document.getElementById("owner").value;
+  if(!time || !pet || !owner) {
+    novaNotificacao("Preencha todos os campos!");
+    return;
+  }
 
-const row=document.createElement("tr");
+  try {
+    const res = await fetch(`${APP_WEB_URL}?action=addConsulta&time=${encodeURIComponent(time)}&pet=${encodeURIComponent(pet)}&owner=${encodeURIComponent(owner)}`);
+    const result = await res.json();
+    if(result.success) {
+      novaNotificacao("Consulta cadastrada com sucesso ✅");
+      carregarConsultas();
+      document.getElementById("time").value = "";
+      document.getElementById("pet").value = "";
+      document.getElementById("owner").value = "";
+    }
+  } catch(err) {
+    console.error("Erro ao cadastrar consulta:", err);
+    novaNotificacao("Erro ao cadastrar consulta ❌");
+  }
+}
 
-row.innerHTML=`
-<td>${time}</td>
-<td>${pet}</td>
-<td>${owner}</td>
-`;
+// Notificações
+function novaNotificacao(msg) {
+  const notificationsEl = document.getElementById("notifications");
+  const notif = document.createElement("div");
+  notif.className = "notification";
+  notif.textContent = msg;
+  notificationsEl.appendChild(notif);
+  setTimeout(() => notif.remove(), 4000);
+}
 
-list.appendChild(row);
-
-form.reset();
-
-};
-
+// Carregar consultas ao abrir
+carregarConsultas();
 </script>
 
 </body>
