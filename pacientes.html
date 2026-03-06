@@ -2,92 +2,217 @@
 <html lang="pt-BR">
 
 <head>
-
 <meta charset="UTF-8">
 <title>Pacientes</title>
 
+<!-- Fonte futurista -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
 <style>
+  body {
+    font-family: 'Inter', Arial, sans-serif;
+    background: #0d0d0f;
+    color: #e0e0e0;
+    padding: 30px;
+    margin: 0;
+  }
 
-body{
-font-family:Arial;
-background:#f4f6f8;
-padding:30px;
-}
+  h1 {
+    text-align: center;
+    font-weight: 600;
+    font-size: 2em;
+    color: #00f6ff;
+    margin-bottom: 20px;
+    text-shadow: 0 0 10px #00f6ff;
+  }
 
-table{
-width:100%;
-border-collapse:collapse;
-background:white;
-}
+  .top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
 
-th,td{
-padding:10px;
-border:1px solid #ddd;
-}
+  .top-bar button {
+    background: #00f6ff;
+    color: #0d0d0f;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.3s;
+  }
 
-th{
-background:#eee;
-}
+  .top-bar button:hover {
+    background: #00c2d6;
+  }
 
-input{
-padding:8px;
-margin-right:10px;
-}
+  .form-container {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
 
-button{
-padding:8px 15px;
-}
+  .form-container input {
+    padding: 10px;
+    border-radius: 8px;
+    border: none;
+    flex: 1;
+    min-width: 150px;
+    background: #1a1a1f;
+    color: #e0e0e0;
+  }
 
+  .form-container button {
+    background: #00f6ff;
+    color: #0d0d0f;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.3s;
+  }
+
+  .form-container button:hover {
+    background: #00c2d6;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #1a1a1f;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0, 246, 255, 0.2);
+  }
+
+  th, td {
+    padding: 15px;
+    text-align: left;
+  }
+
+  th {
+    background: #111;
+    color: #00f6ff;
+    text-transform: uppercase;
+  }
+
+  tr:nth-child(even) {
+    background: #141418;
+  }
+
+  tr:hover {
+    background: #0d0d0f;
+    cursor: pointer;
+  }
+
+  .notification {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #00f6ff;
+    color: #0d0d0f;
+    padding: 10px 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px #00f6ff;
+    font-weight: 600;
+    opacity: 0.9;
+  }
 </style>
-
 </head>
 
 <body>
 
-<h1>Cadastro de Pacientes</h1>
+<div class="top-bar">
+  <button onclick="window.location.href='index.html'">🔙 Voltar</button>
+  <h1>Pacientes Cadastrados</h1>
+</div>
 
-<input id="petName" placeholder="Nome do Pet">
-<input id="ownerName" placeholder="Nome do Dono">
-<input id="phone" placeholder="Telefone">
-
-<button onclick="addPatient()">Cadastrar</button>
+<div class="form-container">
+  <input id="petName" placeholder="Nome do Pet">
+  <input id="ownerName" placeholder="Nome do Dono">
+  <input id="phone" placeholder="Telefone">
+  <button onclick="addPatient()">Cadastrar</button>
+</div>
 
 <table>
-
-<thead>
-<tr>
-<th>Pet</th>
-<th>Dono</th>
-<th>Telefone</th>
-</tr>
-</thead>
-
-<tbody id="patientList"></tbody>
-
+  <thead>
+    <tr>
+      <th>Pet</th>
+      <th>Dono</th>
+      <th>Telefone</th>
+    </tr>
+  </thead>
+  <tbody id="patientList"></tbody>
 </table>
 
+<div id="notifications"></div>
+
 <script>
+const APP_WEB_URL = 'https://script.google.com/macros/s/AKfycbwEMX7UrDj1GOeW4a_4GyOagGlndy9rcFsBOgXwH6Ef1DUfagUvdbDip8VUWadw5V4JEA/exec';
+const SHEET_ABA = 'Pacientes';
 
-function addPatient(){
+// Função para pegar pacientes reais
+async function carregarPacientes() {
+  try {
+    const res = await fetch(`${APP_WEB_URL}?action=${SHEET_ABA}`);
+    const data = await res.json();
 
-const pet=document.getElementById("petName").value;
-const owner=document.getElementById("ownerName").value;
-const phone=document.getElementById("phone").value;
-
-const row=document.createElement("tr");
-
-row.innerHTML=`
-<td>${pet}</td>
-<td>${owner}</td>
-<td>${phone}</td>
-`;
-
-document.getElementById("patientList").appendChild(row);
-
+    const container = document.getElementById("patientList");
+    container.innerHTML = "";
+    data.forEach(p => {
+      const row = document.createElement("tr");
+      row.innerHTML = `<td>${p[0]}</td><td>${p[1]}</td><td>${p[2]}</td>`;
+      container.appendChild(row);
+    });
+  } catch(err) {
+    console.error("Erro ao carregar pacientes:", err);
+  }
 }
 
+// Função para cadastrar paciente
+async function addPatient() {
+  const pet = document.getElementById("petName").value;
+  const owner = document.getElementById("ownerName").value;
+  const phone = document.getElementById("phone").value;
+
+  if(!pet || !owner || !phone) {
+    novaNotificacao("Preencha todos os campos!");
+    return;
+  }
+
+  // Enviar para Google Sheets
+  try {
+    const res = await fetch(`${APP_WEB_URL}?action=addPaciente&pet=${encodeURIComponent(pet)}&owner=${encodeURIComponent(owner)}&phone=${encodeURIComponent(phone)}`);
+    const result = await res.json();
+    if(result.success) {
+      novaNotificacao("Paciente cadastrado com sucesso ✅");
+      carregarPacientes();
+      document.getElementById("petName").value = "";
+      document.getElementById("ownerName").value = "";
+      document.getElementById("phone").value = "";
+    }
+  } catch(err) {
+    console.error("Erro ao cadastrar paciente:", err);
+    novaNotificacao("Erro ao cadastrar paciente ❌");
+  }
+}
+
+// Função para mostrar notificações
+function novaNotificacao(msg) {
+  const notificationsEl = document.getElementById("notifications");
+  const notif = document.createElement("div");
+  notif.className = "notification";
+  notif.textContent = msg;
+  notificationsEl.appendChild(notif);
+  setTimeout(() => notif.remove(), 4000);
+}
+
+// Carregar pacientes ao abrir a página
+carregarPacientes();
 </script>
 
 </body>
-
 </html>
