@@ -2,12 +2,10 @@
 <html lang="pt-BR">
 
 <head>
-
 <meta charset="UTF-8">
 <title>Atendimento</title>
 
 <style>
-
 body{
 font-family:Arial;
 background:#f4f6f8;
@@ -61,25 +59,19 @@ border:1px solid #ccc;
 }
 
 </style>
-
 </head>
-
 <body>
 
 <h1>Atendimento</h1>
 
 <div id="chatContainer"></div>
-
 <input id="messageInput" placeholder="Digite a mensagem">
-
 <button onclick="sendMessage()">
 Enviar
 </button>
 
 <div id="callArea">
-
 <h3>Chamada</h3>
-
 <button id="startCall">
 Iniciar chamada
 </button>
@@ -89,56 +81,34 @@ Status: parado
 </p>
 
 </div>
-
 <script>
-
 const chat=document.getElementById("chatContainer");
-
 function addMessage(text,type){
-
 const div=document.createElement("div");
-
 div.classList.add("message");
 div.classList.add(type);
-
 div.innerText=text;
-
 chat.appendChild(div);
-
 chat.scrollTop=chat.scrollHeight;
-
 }
 
 function sendMessage(){
-
 const input=document.getElementById("messageInput");
-
 const text=input.value;
-
 if(!text)return;
-
 addMessage(text,"user");
-
 input.value="";
-
 setTimeout(()=>{
-
 addMessage("Recebemos sua mensagem. Em breve vamos responder.","bot");
 
 },500);
 
 }
-
 document.getElementById("startCall").onclick=()=>{
-
 console.log("iniciando chamada");
-
 document.getElementById("callStatus").innerText="Status: chamada iniciada";
 
 };
-
 </script>
-
 </body>
-
 </html>
