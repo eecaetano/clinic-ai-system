@@ -1,152 +1,34 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
 <meta charset="UTF-8">
 <title>Pacientes</title>
-
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
 
 <style>
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family:Segoe UI, Arial, sans-serif;
-}
-
-body{
-  background:linear-gradient(135deg,#0f172a,#1e293b,#020617);
-  height:100vh;
-  color:white;
-  display:flex;
-}
-
-/* SIDEBAR */
-.sidebar{
-  width:260px;
-  background:rgba(255,255,255,0.05);
-  backdrop-filter:blur(15px);
-  border-right:1px solid rgba(255,255,255,0.1);
-  padding:30px;
-  display:flex;
-  flex-direction:column;
-}
-
-.logo{
-  font-size:22px;
-  font-weight:700;
-  margin-bottom:40px;
-  letter-spacing:1px;
-}
-
-.menu a{
-  display:block;
-  text-decoration:none;
-  color:white;
-  padding:12px 15px;
-  margin-bottom:10px;
-  border-radius:8px;
-  transition:0.3s;
-}
-
-.menu a:hover{
-  background:rgba(255,255,255,0.15);
-  transform:translateX(5px);
-}
-
-/* MAIN */
-.main{
-  flex:1;
-  padding:40px;
-  overflow-y:auto;
-}
-
-.header{
-  font-size:28px;
-  font-weight:600;
-  margin-bottom:30px;
-}
-
-/* CARDS / FORM */
-.form-container{
-  display:flex;
-  gap:10px;
-  flex-wrap:wrap;
-  margin-bottom:20px;
-}
-
-input, button{
-  padding:10px;
-  border-radius:8px;
-  border:none;
-}
-
-input{
-  background:rgba(255,255,255,0.05);
-  color:white;
-  flex:1;
-  min-width:150px;
-}
-
-button{
-  background:#00f6ff;
-  color:#0d0d0f;
-  font-weight:600;
-  cursor:pointer;
-  transition:0.3s;
-}
-
-button:hover{
-  background:#00c2d6;
-}
-
-/* TABLE */
-table{
-  width:100%;
-  border-collapse:collapse;
-  background:rgba(255,255,255,0.05);
-  border-radius:12px;
-  overflow:hidden;
-}
-
-th, td{
-  padding:12px;
-  text-align:left;
-}
-
-th{
-  background:rgba(255,255,255,0.1);
-  color:#00f6ff;
-}
-
-tr:nth-child(even){
-  background:rgba(255,255,255,0.02);
-}
-
-tr:hover{
-  background:rgba(255,255,255,0.08);
-  cursor:pointer;
-}
-
-/* NOTIFICATIONS */
-.notification{
-  position:fixed;
-  bottom:20px;
-  right:20px;
-  background:#00f6ff;
-  color:#0d0d0f;
-  padding:10px 20px;
-  border-radius:10px;
-  box-shadow:0 0 15px #00f6ff;
-  font-weight:600;
-  opacity:0.9;
-}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Segoe UI, Arial, sans-serif;}
+body{background:linear-gradient(135deg,#0f172a,#1e293b,#020617);height:100vh;color:white;display:flex;}
+.sidebar{width:260px;background:rgba(255,255,255,0.05);backdrop-filter:blur(15px);border-right:1px solid rgba(255,255,255,0.1);padding:30px;display:flex;flex-direction:column;}
+.logo{font-size:22px;font-weight:700;margin-bottom:40px;letter-spacing:1px;}
+.menu a{display:block;text-decoration:none;color:white;padding:12px 15px;margin-bottom:10px;border-radius:8px;transition:0.3s;}
+.menu a:hover{background:rgba(255,255,255,0.15);transform:translateX(5px);}
+.main{flex:1;padding:40px;overflow-y:auto;}
+.header{font-size:28px;font-weight:600;margin-bottom:30px;}
+.form-container{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px;}
+input, button{padding:10px;border-radius:8px;border:none;}
+input{background:rgba(255,255,255,0.05);color:white;flex:1;min-width:150px;}
+button{background:#00f6ff;color:#0d0d0f;font-weight:600;cursor:pointer;transition:0.3s;}
+button:hover{background:#00c2d6;}
+table{width:100%;border-collapse:collapse;background:rgba(255,255,255,0.05);border-radius:12px;overflow:hidden;}
+th, td{padding:12px;text-align:left;}
+th{background:rgba(255,255,255,0.1);color:#00f6ff;}
+tr:nth-child(even){background:rgba(255,255,255,0.02);}
+tr:hover{background:rgba(255,255,255,0.08);cursor:pointer;}
+.notification{position:fixed;bottom:20px;right:20px;background:#00f6ff;color:#0d0d0f;padding:10px 20px;border-radius:10px;box-shadow:0 0 15px #00f6ff;font-weight:600;opacity:0.9;}
 </style>
 </head>
 
 <body>
-
 <div class="sidebar">
   <div class="logo">Clinica Pet</div>
   <div class="menu">
@@ -154,7 +36,7 @@ tr:hover{
     <a href="pacientes.html">🐾 Pacientes</a>
     <a href="agenda.html">📅 Agenda</a>
     <a href="atendimento.html">💬 Atendimentos</a>
-    <a href="configurações.html">⚙ Configurações</a>
+    <a href="configuracoes.html">⚙ Configurações</a>
   </div>
 </div>
 
@@ -163,8 +45,11 @@ tr:hover{
 
   <div class="form-container">
     <input id="nomePet" placeholder="Nome do Pet">
-    <input id="nomeDono" placeholder="Nome do Dono">
-    <input id="contato" placeholder="Telefone / E-mail">
+    <input id="dataNascimento" placeholder="Data de Nascimento">
+    <input id="tutor" placeholder="Nome do Tutor">
+    <input id="email" placeholder="E-mail">
+    <input id="contato" placeholder="Contato">
+    <input id="endereco" placeholder="Endereço">
     <button onclick="addPaciente()">Cadastrar</button>
   </div>
 
@@ -172,9 +57,12 @@ tr:hover{
     <thead>
       <tr>
         <th>ID</th>
-        <th>Pet</th>
-        <th>Dono</th>
+        <th>Nome</th>
+        <th>Data Nascimento</th>
+        <th>Tutor</th>
+        <th>E-mail</th>
         <th>Contato</th>
+        <th>Endereço</th>
       </tr>
     </thead>
     <tbody id="patientList"></tbody>
@@ -184,8 +72,8 @@ tr:hover{
 </div>
 
 <script>
-const APP_WEB_URL = 'https://script.google.com/macros/s/AKfycbwEMX7UrDj1GOeW4a_4GyOagGlndy9rcFsBOgXwH6Ef1DUfagUvdbDip8VUWadw5V4JEA/exec';
-const SHEET_ABA = 'Pacientes';
+const APP_WEB_URL='https://script.google.com/macros/s/AKfycbwEMX7UrDj1GOeW4a_4GyOagGlndy9rcFsBOgXwH6Ef1DUfagUvdbDip8VUWadw5V4JEA/exec';
+const SHEET_ABA='Pacientes';
 
 function novaNotificacao(msg){
   const notificationsEl=document.getElementById("notifications");
@@ -200,23 +88,23 @@ async function carregarPacientes(){
   try{
     const res=await fetch(`${APP_WEB_URL}?action=${SHEET_ABA}`);
     const data=await res.json();
-
-    if(!Array.isArray(data)){
-      console.error("Erro: Dados recebidos não são um array",data);
-      novaNotificacao("Erro ao carregar pacientes ❌");
-      return;
-    }
-
-    const registros=data.slice(1); // remover cabeçalho
+    if(!Array.isArray(data)){ novaNotificacao("Erro ao carregar pacientes ❌"); return; }
+    const registros=data.slice(1); // Ignora cabeçalho
     const container=document.getElementById("patientList");
     container.innerHTML="";
-
     registros.forEach(item=>{
       const row=document.createElement("tr");
-      row.innerHTML=`<td>${item[0]}</td><td>${item[1]}</td><td>${item[3]}</td><td>${item[5]}</td>`;
+      row.innerHTML=`
+        <td>${item[0]}</td>
+        <td>${item[1]}</td>
+        <td>${item[2]}</td>
+        <td>${item[3]}</td>
+        <td>${item[4]}</td>
+        <td>${item[5]}</td>
+        <td>${item[6]}</td>
+      `;
       container.appendChild(row);
     });
-
   }catch(err){
     console.error("Erro ao carregar pacientes:",err);
     novaNotificacao("Erro ao carregar pacientes ❌");
@@ -225,23 +113,29 @@ async function carregarPacientes(){
 
 async function addPaciente(){
   const nomePet=document.getElementById("nomePet").value;
-  const nomeDono=document.getElementById("nomeDono").value;
+  const dataNascimento=document.getElementById("dataNascimento").value;
+  const tutor=document.getElementById("tutor").value;
+  const email=document.getElementById("email").value;
   const contato=document.getElementById("contato").value;
+  const endereco=document.getElementById("endereco").value;
 
-  if(!nomePet || !nomeDono || !contato){
+  if(!nomePet || !dataNascimento || !tutor || !email || !contato || !endereco){
     novaNotificacao("Preencha todos os campos!");
     return;
   }
 
   try{
-    const res=await fetch(`${APP_WEB_URL}?action=addPaciente&pet=${encodeURIComponent(nomePet)}&owner=${encodeURIComponent(nomeDono)}&contato=${encodeURIComponent(contato)}`);
+    const res=await fetch(`${APP_WEB_URL}?action=addPaciente&nomePet=${encodeURIComponent(nomePet)}&dataNascimento=${encodeURIComponent(dataNascimento)}&tutor=${encodeURIComponent(tutor)}&email=${encodeURIComponent(email)}&contato=${encodeURIComponent(contato)}&endereco=${encodeURIComponent(endereco)}`);
     const result=await res.json();
     if(result.success){
       novaNotificacao("Paciente cadastrado ✅");
       carregarPacientes();
       document.getElementById("nomePet").value="";
-      document.getElementById("nomeDono").value="";
+      document.getElementById("dataNascimento").value="";
+      document.getElementById("tutor").value="";
+      document.getElementById("email").value="";
       document.getElementById("contato").value="";
+      document.getElementById("endereco").value="";
     }else{
       novaNotificacao("Erro ao cadastrar paciente ❌");
     }
@@ -251,8 +145,8 @@ async function addPaciente(){
   }
 }
 
+// Carregar pacientes ao abrir a página
 carregarPacientes();
 </script>
-
 </body>
 </html>
