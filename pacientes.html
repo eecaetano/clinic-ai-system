@@ -152,26 +152,27 @@
 
 <script>
 const APP_WEB_URL = 'https://script.google.com/macros/s/AKfycbwEMX7UrDj1GOeW4a_4GyOagGlndy9rcFsBOgXwH6Ef1DUfagUvdbDip8VUWadw5V4JEA/exec';
-const SHEET_ABA = 'Pacientes';
+const SHEET_ABA = 'pacientes';
 
 // Carregar pacientes reais do Google Sheets
 async function carregarPacientes() {
   try {
-    const res = await fetch(`${APP_WEB_URL}?action=${SHEET_ABA}`);
+    const res = await fetch(`${APP_WEB_URL}?action=pacientes`);
     const data = await res.json();
     const container = document.getElementById("patientList");
     container.innerHTML = "";
     data.forEach(p => {
       const row = document.createElement("tr");
-      row.innerHTML = `<td>${p[0]}</td><td>${p[1]}</td><td>${p[2]}</td>`;
+      row.innerHTML = `<td>${p[0]}</td><td>${p[3]}</td><td>${p[5]}</td>`;
       container.appendChild(row);
     });
   } catch(err) {
     console.error("Erro ao carregar pacientes:", err);
+    novaNotificacao("Erro ao carregar pacientes ❌");
   }
 }
 
-// Cadastrar paciente e enviar para Google Sheets
+// Cadastrar paciente no Google Sheets
 async function addPatient() {
   const pet = document.getElementById("petName").value;
   const owner = document.getElementById("ownerName").value;
@@ -198,7 +199,7 @@ async function addPatient() {
   }
 }
 
-// Função para notificações
+// Função para mostrar notificações
 function novaNotificacao(msg) {
   const notificationsEl = document.getElementById("notifications");
   const notif = document.createElement("div");
